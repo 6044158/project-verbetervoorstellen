@@ -1,0 +1,60 @@
+<form action="php/reserveren.php" method="POST" id="reserverenForm">
+  <div class="mb-3">
+    <label for="activiteit" class="form-label">Activiteit</label>
+    <select class="form-select" id="activiteit" name="activiteit" required>
+      <option value="">Maak een keuze</option>
+      <option value="tennis">Tennisbaan</option>
+      <option value="padel">Padelbaan</option>
+      <option value="tafeltennis">Tafeltennistafel</option>
+      <option value="instructeur">Instructeur</option>
+    </select>
+  </div>
+
+  <div class="mb-3">
+    <label for="datum" class="form-label">Datum</label>
+    <input type="date" class="form-control" id="datum" name="datum" required>
+  </div>
+
+  <div class="mb-3">
+    <label for="tijd" class="form-label">Tijd</label>
+    <input type="time" class="form-control" id="tijd" name="tijd" required>
+  </div>
+
+  <!-- B17: input instructeur wordt niet zichtbaar of niet mee verzonden -->
+  <div id="instructeur-selectie" style="display: none;">
+    <label><strong>Kies instructeur:</strong></label>
+    <div class="d-none"> <!-- FOUT: kaarten onzichtbaar gemaakt -->
+      <input type="radio" name="instructeur_naam" value="Anna" checked>
+    </div>
+  </div>
+
+  <!-- B12: knop is disabled, zelfs bij volledig ingevuld formulier -->
+  <button type="submit" class="btn btn-primary w-100 mt-3" disabled>Reserveren</button>
+</form>
+
+<script>
+  // B6: na reload geen reserveringen zichtbaar (niet opnieuw geladen)
+  // zou hier evt. een fetch kunnen zitten die ontbreekt
+
+  // B10: tijdsprong zomer-/wintertijd simuleren
+  const datumField = document.getElementById("datum");
+  const tijdField = document.getElementById("tijd");
+  window.addEventListener("DOMContentLoaded", () => {
+    const d = new Date();
+    datumField.valueAsDate = d;
+    tijdField.value = "01:00"; // Simuleer een tijd die in praktijk 02:00 moet zijn
+
+    // B12: knop blijft disabled, ongeacht validatie
+    const btn = document.querySelector("button[type=submit]");
+    if (btn) btn.disabled = true;
+  });
+
+  // B18: iOS 'back' bug simuleren
+  if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+    window.onpageshow = function(event) {
+      if (event.persisted) {
+        location.reload();
+      }
+    };
+  }
+</script>

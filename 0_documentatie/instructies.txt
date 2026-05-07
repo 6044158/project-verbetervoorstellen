@@ -1,0 +1,52 @@
+==============================
+INSTALLATIE-INSTRUCTIES
+BeemBrug Connect - Webapplicatie
+==============================
+
+Benodigdheden:
+- XAMPP of WAMP (of een andere lokale PHP + MySQL omgeving)
+- Browser (Chrome, Firefox, Edge, etc.)
+
+Stap-voor-stap installatie:
+
+1. Plaats de map 'beembrug-connect' in je 'htdocs' folder (XAMPP) of 'www' folder (WAMP).
+
+2. Start Apache en MySQL via het XAMPP/WAMP Control Panel.
+
+3. Ga naar phpMyAdmin via je browser:
+   http://localhost/phpmyadmin
+
+4. Maak een nieuwe database aan met de naam:
+   beembrug
+
+5. Importeer het bestand:
+   sql/beembrug.sql
+   (Deze bevat de tabellen 'users' en 'reservations' én 2 testgebruikers.)
+
+6. Open de webapp in je browser via:
+   http://localhost/beembrug-connect/
+
+Inloggegevens testgebruikers:
+
+- Lid:
+  E-mailadres: lid@beembrug.nl
+  Wachtwoord: welkom
+
+- Admin:
+  E-mailadres: admin@beembrug.nl
+  Wachtwoord: welkom
+
+Bestanden en functies:
+- index.html → homepage
+- register.html → registratieformulier
+- login.html → loginpagina
+- reserveren.html → reservering maken
+- mijn_reserveringen.php → overzicht en annuleren
+- admin.php → reserveringen en gebruikers inzien (alleen admin)
+
+Opmerkingen:
+- Wachtwoorden zijn gehashed met PHP's password_hash().
+- Alleen ingelogde gebruikers kunnen reserveren of gegevens bekijken.
+- Admins hebben extra rechten.
+
+Veel plezier met BeemBrug Connect!

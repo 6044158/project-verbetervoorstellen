@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Beschikbare Tijdsloten – BeemBrug</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .tijdslot {
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin-bottom: 0.5rem;
+      cursor: default;
+      color: white;
+      text-align: center;
+      font-weight: 500;
+      font-size: 1.1rem;
+    }
+    .vrij { background-color: #28a745; }
+    .bezet { background-color: #dc3545; }
+  </style>
+</head>
+<body class="container py-5">
+
+  <h2 class="mb-4">Beschikbare Tijdsloten</h2>
+
+  <div class="mb-4">
+    <label for="datum" class="form-label">Kies een datum:</label>
+    <input type="date" id="datum" class="form-control" />
+  </div>
+
+  <div id="tijdslotContainer"></div>
+
+  <script>
+    const container = document.getElementById("tijdslotContainer");
+    const datumInput = document.getElementById("datum");
+    const uren = Array.from({ length: 15 }, (_, i) => i + 8); // 08:00 t/m 22:00
+
+    datumInput.addEventListener("change", laadTijdsloten);
+
+    function laadTijdsloten() {
+      const datum = datumInput.value;
+      if (!datum) return;
+
+      fetch(`php/haal_tijdsloten.php?datum=${datum}`)
+        .then(res => res.json())
+        .then(bezetteTijden => {
+          container.innerHTML = '';
+          uren.forEach(uur => {
+            const tijd = `${uur.toString().padStart(2, '0')}:00`;
+            const div = document.createElement("div");
+            div.className = `tijdslot ${bezetteTijden.includes(tijd) ? 'bezet' : 'vrij'}`;
+            div.textContent = `${tijd} - ${bezetteTijden.includes(tijd) ? 'Bezet' : 'Vrij'}`;
+            container.appendChild(div);
+          });
+        });
+    }
+
+    // Initieer met vandaag
+    datumInput.valueAsDate = new Date();
+    laadTijdsloten();
+  </script>
+
+</body>
+</html>

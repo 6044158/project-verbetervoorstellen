@@ -1,0 +1,95 @@
+# version : '3.8'
+
+# # defineren van alle containers die mijn app samen vormen 
+# # web (apache +PHP) , MYSQL(db), phpmyadmin
+# services:
+#   # web (apache + PHP)/ web server contaier
+#   web: 
+#     build: . # docker build een image op basis van dockerfile 
+#     container_name: beembrug_web
+#     ports:
+#       - "8080:80" # 8080 mijn computer / 80 apache in contanier // website http://localhost/8080
+#     volumes:
+#       - ./:/var/www/html # ./mijn projectmap  en /var/www/html de map in de container
+#       # : koppel      ./ projectmap met de map in de contanier  /var/www/html
+#     depends_on:
+#       -db # zorgt dat MySql eerst start voordat de webserver start//dus eerst db/mysql dan de webserver
+  
+
+#   db:
+#     image: mysql:8.0  #officiele image mysql
+#     contanier_name: beembrug_db
+#     restart: always 
+#     environment:
+#       #varibelen , database instellingen
+#          MYSQL_ROOT_PASSWORD: root
+#          MYSQL_DATABASE: beembrug # data base die automatisch wordt aangemaakt 
+#          #extra gebruiker voor mijn app
+#          MYSQL_USER: beembrug_user
+#          MYSQL_PASSWORD: beembrug_pass 
+#     ports:
+#       - "3306:3306"
+#     volumes:
+#       # -mysql_data:/var/lib/mysql #bewaart de database permanent
+#       -./sql:/docker-entrypoint-initdb.d  # de data die in bestand sql staat
+
+#   phpmyadmin:
+#     image: phpmyadmin/phpmyadmin
+#     container_name: beembrug_phpmyadmin
+#     restart: always
+#     depends_on:
+#       -db
+#     environment:
+#        PMA_HOST: db
+#        PMA_PORT: 3306
+#        MYSQL_ROOT_PASSWORD: root
+#     ports:
+#       - "8081:80"
+#     volumes:
+#       mysql_data:
+
+      
+    
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: beembrug_web
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www/html
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    container_name: beembrug_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: beembrug
+      MYSQL_USER: beembrug_user
+      MYSQL_PASSWORD: beembrug_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./sql:/docker-entrypoint-initdb.d
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: beembrug_phpmyadmin
+    restart: always
+    depends_on:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "8081:80"
+
+volumes:
+  mysql_data:
