@@ -35,7 +35,11 @@ INSERT INTO users (naam, email, wachtwoord, rol) VALUES
 (
     'Beheerder',
     'admin@beembrug.nl',
-    '$2y$10$YQHt6b2qKmy7eP74FZX0gOn1UhX4JwCrakFBKUkiGeYXmskpVZOV2',
+    -- '2y$10$YQHt6b2qKmy7eP74FZX0gOn1UhX4JwCrakFBKUkiGeYXmskpVZOV2',
+    '$2y$10$V5iWYwNDnT0ygreLwu2azeSPFdBYQHK2Azmispyx5tBKOo4wnsZCG',
     'admin'
 );
--- 
+-- UPDATE users
+-- SET wachtwoord = '$2y$10$V5iWYwNDnT0ygreLwu2azeSPFdBYQHK2Azmispyx5tBKOo4wnsZCG'
+
+-- WHERE email = 'lid@beembrug.nl';
