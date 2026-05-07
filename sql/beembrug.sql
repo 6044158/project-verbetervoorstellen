@@ -38,3 +38,4 @@ INSERT INTO users (naam, email, wachtwoord, rol) VALUES
     '$2y$10$YQHt6b2qKmy7eP74FZX0gOn1UhX4JwCrakFBKUkiGeYXmskpVZOV2',
     'admin'
 );
+-- 
