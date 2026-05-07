@@ -70,8 +70,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: beembrug
-      MYSQL_USER: beembrug_user
-      MYSQL_PASSWORD: beembrug_pass
+
     ports:
       - "3306:3306"
     volumes:

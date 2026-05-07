@@ -1,7 +1,7 @@
 <?php
 // config.php – met opzettelijke fouten voor testdoeleinden
 
-$host = 'localhost';
+$host = 'db';
 $db   = 'beembrug';
 $user = 'root';
 $pass = 'root';
